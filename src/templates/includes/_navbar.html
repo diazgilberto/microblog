@@ -17,9 +17,15 @@
 
             </ul>
             <ul class="navbar-nav ml-auto">
+                {% if current_user.is_anonymous %}
                 <li class="nav-item">
                     <a href="{{ url_for('login') }}" class="nav-link">Login</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+                </li>
+                {% endif %}
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
