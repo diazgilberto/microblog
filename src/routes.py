@@ -1,5 +1,6 @@
-from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import login_user, current_user, logout_user, login_required
+from werkzeug.urls import url_parse
 
 from src.models import User
 from src import app
@@ -8,13 +9,19 @@ from src.forms import LoginForm
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = {
-        'username': 'gdiaz',
-        'full_name': 'Gilberto Diaz',
-        'title': 'Microblog',
-    }
-    return render_template('index.html', user=user)
+    posts = [
+        {
+            'author': {'first_name': 'Gilberto'},
+            'body': 'My very first post.'
+        },
+        {
+            'author': {'first_name': 'Sandra'},
+            'body': 'This is another post.'
+        }
+    ]
+    return render_template('index.html', title='Home', posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -26,14 +33,15 @@ def login():
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        print(user.username)
 
-        if user is None or not user.check_password(form.password.data):
+        if user is None or user.check_password(form.password.data) is False:
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        flash(f'Welcome back {user.username}')
-        return redirect(url_for('index'))
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
 
     return render_template('login.html', title='Sign In', form=form)
 
@@ -42,3 +50,9 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/mypatterns')
+@login_required
+def my_patterns():
+    return render_template('mypatterns.html', title='My Patterns')
