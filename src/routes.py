@@ -3,8 +3,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from src.models import User
-from src import app
-from src.forms import LoginForm
+from src import app, db
+from src.forms import LoginForm, RegistrationForm
 
 
 @app.route('/')
@@ -56,3 +56,19 @@ def logout():
 @login_required
 def my_patterns():
     return render_template('mypatterns.html', title='My Patterns')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations! Now you are a registered user.')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
