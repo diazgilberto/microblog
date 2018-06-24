@@ -7,6 +7,33 @@
 - `flask db migrate '<migration message>'`
 - `flask db upgrade`
 
+### SQLAlchemy
+#### One to Many Relationship
+```python
+class User(UserMixin, db.Model):
+    # high level sqlalchemy construct that queries all posts for a specific user
+    # this is not a database column in the database
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    
+class Post(db.Model):
+    # user.id is the user unique id
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+```
+
+#### Many to Many Relationship / Self Referential Relationship
+```python
+followers = db.Table(
+    'followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id')),
+)
+class User(UserMixin, db.Model):
+    following = db.relationship(
+        'User', secundary=followers,
+    )
+
+```
+
 ### Requirements:
 #### User Login Page
 - Should be able to create and account
