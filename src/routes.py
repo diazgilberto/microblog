@@ -87,14 +87,13 @@ def user(username):
             'body': 'This is another post.'
         }
     ]
-
     return render_template('user.html', title=c_user.username, user=c_user, posts=posts)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
 
     if form.validate_on_submit():
         current_user.username = form.username.data

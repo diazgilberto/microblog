@@ -20,3 +20,13 @@
 #### User Profile Page
 - Track last time user visit page
 - Should have default gravatar
+#### Error Handling
+We want to send an email immediately a 500 occurs 
+##### `confing.py` with environment variable with the same name
+- `MAIL_SERVER = os.environ.get('MAIL_SERVER')`
+- `MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)`
+- `MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None` encrypted connection or not
+- `MAIL_USERNAME = os.environ.get('MAIL_USERNAME')`
+- `MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')`
+- `python -m smtpd -n -c DebuggingServer localhost:8025` local mail server
+
