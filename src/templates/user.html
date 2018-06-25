@@ -2,26 +2,54 @@
 
 {% block content %}
     <div class="media">
-
         <img src="{{ user.avatar(128) }}" alt="Profile Image" class="rounded-circle mr-3">
         <div class="media-body">
             <h2 class="mt-0 mr-3 d-inline">{{ user.username }}</h2>
+
+            {# If current_user edit profile icon will show #}
             {% if user == current_user %}
-            <a href="{{ url_for('edit_profile') }}"><i
-                class="fas fa-user-edit"></i>
-            </a>
+                <a href="{{ url_for('edit_profile') }}"><i class="fas fa-user-edit"></i>
+                </a>
             {% endif %}
+
+            {# If user has about_me content will show up #}
             {% if user.about_me %}
                 <p class="mt-2">{{ user.about_me }}</p>
             {% else %}
                 <p class="text-muted mt-2">Tell us something about you.</p>
             {% endif %}
-            {% if user.last_seen %} <p class="d-inline">Last Visit: </p>
-                <p class="text-muted d-inline">{{ user.last_seen }}</p>{% endif %}
+
+            {# Last seen timestamp #}
+            {% if user.last_seen %}
+                <p class="d-inline">Last Visit: </p>
+                <p class="text-muted d-inline">{{ user.last_seen }}</p>
+            {% endif %}
+
+            {# If profile page != to current_user and current_user is not following user #}
+            {% if (user != current_user) and (not current_user.is_following(user)) %}
+                <div>
+                    <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
+                </div>
+            {% elif (user != current_user) and (current_user.is_following(user)) %}
+                <div>
+                    <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+                </div>
+            {% endif %}
+
+            <div>
+                <span class="badge badge-primary">Followers: {{ user.followers.count() }}</span>
+                <span class="badge badge-primary">Following: {{ user.following.count() }}</span>
+            </div>
         </div>
     </div>
     <hr>
     {% for post in posts %}
         {% include "includes/_post.html" %}
     {% endfor %}
+    {% if prev_page %}
+        <a href="{{ prev_page }}">Newer Posts</a> |
+    {% endif %}
+    {% if next_page %}
+        <a href="{{ next_page }}">Older Posts</a>
+    {% endif %}
 {% endblock %}

@@ -1,8 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
     <h2> Hi, welcome back {{ current_user.username }}! </h2>
-
+    {% if form %}
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.post.label }}<br>
+                {{ form.post(class_="form-control") }}
+                {% for e in form.post.errors %}
+                    <small class="form-text text-danger">{{ e }}</small>
+                {% endfor %}
+            </div>
+            {{ form.submit(class_="btn btn-primary") }}
+        </form>
+    {% endif %}
+    <hr>
     {% for post in posts %}
-        <p>{{ post.body }}</p>
+        {% include "includes/_post.html" %}
     {% endfor %}
+    {% if prev_page %}
+        <a href="{{ prev_page }}">Newer Posts</a> |
+    {% endif %}
+    {% if next_page %}
+        <a href="{{ next_page }}">Older Posts</a>
+    {% endif %}
 {% endblock %}
