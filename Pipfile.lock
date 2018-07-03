@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "81634a73a8eba3fa4d8086656cd15eda21388d2fa6490db216d24a7b6d7374a8"
+            "sha256": "f7c540183bb7d0d66db5bfcff7c6739b2207e31117dcc403241599e1c3f6a89d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,9 +18,15 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:85bd3ea7633024e4930900bc64fb58f9742dedbc6ebb6ecf25be2ea9a3c1b32e"
+                "sha256:1cd32df9a3b8c1749082ef60ffbe05ff16617b6afadfdabc680dcb9344af33d7"
             ],
-            "version": "==0.9.9"
+            "version": "==0.9.10"
+        },
+        "blinker": {
+            "hashes": [
+                "sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6"
+            ],
+            "version": "==1.4"
         },
         "click": {
             "hashes": [
@@ -43,6 +49,13 @@
             ],
             "index": "pypi",
             "version": "==0.4.1"
+        },
+        "flask-mail": {
+            "hashes": [
+                "sha256:22e5eb9a940bf407bcf30410ecc3708f3c56cc44b29c34e1726fe85006935f41"
+            ],
+            "index": "pypi",
+            "version": "==0.9.1"
         },
         "flask-migrate": {
             "hashes": [
@@ -93,6 +106,14 @@
             ],
             "version": "==1.0"
         },
+        "pyjwt": {
+            "hashes": [
+                "sha256:30b1380ff43b55441283cc2b2676b755cca45693ae3097325dea01f3d110628c",
+                "sha256:4ee413b357d53fd3fb44704577afac88e72e878716116270d722723d65b42176"
+            ],
+            "index": "pypi",
+            "version": "==1.6.4"
+        },
         "python-dateutil": {
             "hashes": [
                 "sha256:1adb80e7a782c12e52ef9a8182bebeb73f1d7e24e374397af06fb4956c8dc5c0",
@@ -115,9 +136,9 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:2d5f08f714a886a1382c18be501e614bce50d362384dc089474019ce0768151c"
+                "sha256:e21e5561a85dcdf16b8520ae4daec7401c5c24558e0ce004f9b60be75c4b6957"
             ],
-            "version": "==1.2.8"
+            "version": "==1.2.9"
         },
         "werkzeug": {
             "hashes": [
