@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2> Hi, welcome back {{ current_user.username }}! </h2>
+    {% if title == 'Explore' %}
+        <h2> Explore All Posts! </h2>
+    {% else %}
+        <h2> Hi, welcome back {{ current_user.username }}! </h2>
+    {% endif %}
     {% if form %}
         <form action="" method="POST">
             {{ form.hidden_tag() }}
