@@ -73,3 +73,20 @@ We want to send an email immediately a 500 occurs. Also we want to send an email
 - `MAIL_USERNAME = os.environ.get('MAIL_USERNAME')`
 - `MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')`
 - `python -m smtpd -n -c DebuggingServer localhost:8025` local mail server
+
+#### Time Zone
+
+packages:
+
+- `pipenv install flask-moment`
+
+How to use `flask-moment`
+
+- @ `__init__.py` include the following
+- `from flask_moment import Moment` and create an instance `moment = Moment(app)`
+- @ `base.html`, underneath javascript imports include `{{ moment.include_moment() }}`
+
+Examples how to use `flask_moment`
+
+- `<span class="text-muted">{{ moment(post.timestamp).fromNow() }}</span>`
+- `<p class="text-muted d-inline">{{ moment(user.last_seen).fromNow() }}</p>`

@@ -22,7 +22,7 @@
             {# Last seen timestamp #}
             {% if user.last_seen %}
                 <p class="d-inline">Last Visit: </p>
-                <p class="text-muted d-inline">{{ user.last_seen }}</p>
+                <p class="text-muted d-inline">{{ moment(user.last_seen).fromNow() }}</p>
             {% endif %}
 
             {# If profile page != to current_user and current_user is not following user #}
